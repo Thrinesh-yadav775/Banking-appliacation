@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: banking-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: databaseurl
+        sync: false
+      - key: tokenkey
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
