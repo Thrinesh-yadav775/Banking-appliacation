@@ -240,7 +240,7 @@ export default function Dashboard() {
           <div className="flex flex-col gap-2">
             {transactions.map((tx) => (
               <div
-                key={tx._id}
+                key={String(tx._id)}
                 className="flex items-center justify-between rounded-xl px-4 py-3 bg-gray-50 border border-gray-100 hover:bg-gray-100 transition"
               >
                 <div className="flex items-center gap-3 min-w-0 flex-1">

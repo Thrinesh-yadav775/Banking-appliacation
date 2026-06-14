@@ -151,12 +151,11 @@ async function gettransactions(req, res) {
     for (const t of transactions) {
       const issent = accountidstrings.includes(t.fromaccount._id.toString());
       const isreceived = accountidstrings.includes(t.toaccount._id.toString());
-      if (issent && isreceived) {
-        tagged.push({ _id: t._id, fromname: t.fromaccount.user?.name, toname: t.toaccount.user?.name, amount: t.amount, status: t.status, type: "SENT", createdAt: t.createdAt });
-      } else if (issent) {
-        tagged.push({ _id: t._id, fromname: t.fromaccount.user?.name, toname: t.toaccount.user?.name, amount: t.amount, status: t.status, type: "SENT", createdAt: t.createdAt });
-      } else if (isreceived) {
-        tagged.push({ _id: t._id, fromname: t.fromaccount.user?.name, toname: t.toaccount.user?.name, amount: t.amount, status: t.status, type: "RECEIVED", createdAt: t.createdAt });
+      if (issent) {
+        tagged.push({ _id: `${t._id}-sent`, fromname: t.fromaccount.user?.name, toname: t.toaccount.user?.name, amount: t.amount, status: t.status, type: "SENT", createdAt: t.createdAt });
+      }
+      if (isreceived) {
+        tagged.push({ _id: `${t._id}-received`, fromname: t.fromaccount.user?.name, toname: t.toaccount.user?.name, amount: t.amount, status: t.status, type: "RECEIVED", createdAt: t.createdAt });
       }
     }
 
