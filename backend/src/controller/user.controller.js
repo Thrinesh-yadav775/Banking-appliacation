@@ -23,7 +23,7 @@ async function register(req, res) {
     const { password: _pw, ...safeUser } = user.toObject();
     res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
     res.status(201).json({ message: "user registered successfully", user: safeUser, token });
-    emailservice.sendregistration(user.email, user.name).catch(() => {});
+    emailservice.sendregistration(user.email, user.name).catch((e) => console.error('Registration email failed:', e.message));
   } catch (err) {
     return res.status(500).json({ message: "registration failed, please try again" });
   }
@@ -50,7 +50,7 @@ async function login(req, res) {
     const { password: _pw, ...safeUser } = isvaliduser.toObject();
     res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
     res.status(200).json({ message: "Login successful", user: safeUser, token });
-    emailservice.sendlogin(isvaliduser.email, isvaliduser.name).catch(() => {});
+    emailservice.sendlogin(isvaliduser.email, isvaliduser.name).catch((e) => console.error('Login email failed:', e.message));
   } catch (err) {
     return res.status(500).json({ message: "login failed, please try again" });
   }

@@ -78,7 +78,7 @@ async function createtransaction(req, res) {
     res.status(200).json({ message: "transaction completed successfully", transaction });
 
     const recipientName = touseraccount.user?.name || touseraccount._id.toString();
-    emailservice.sendtransactionemail(req.user.email, req.user.name, amount, recipientName).catch(() => {});
+    emailservice.sendtransactionemail(req.user.email, req.user.name, amount, recipientName).catch((e) => console.error('Transaction email failed:', e.message));
   } catch (err) {
     await session.abortTransaction();
     session.endSession();

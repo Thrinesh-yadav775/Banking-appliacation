@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+if (!process.env.BREVO_API_KEY) {
+  console.error('BREVO_API_KEY is not set — emails will not be sent');
+} else {
+  console.log('Brevo email service ready');
+}
+
 const sendEmail = async (to, subject, html) => {
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
