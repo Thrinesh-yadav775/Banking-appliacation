@@ -12,12 +12,22 @@ export default function Navbar() {
 
   // Check login state when component loads
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const user = localStorage.getItem('user')
-    if (token) {
-      setIsLoggedIn(true)
-      if (user) setUserName(JSON.parse(user).name)
+    function syncAuth() {
+      const token = localStorage.getItem('token')
+      const user = localStorage.getItem('user')
+      if (token) {
+        setIsLoggedIn(true)
+        if (user) {
+          try { setUserName(JSON.parse(user).name) } catch { localStorage.removeItem('user') }
+        }
+      } else {
+        setIsLoggedIn(false)
+        setUserName('')
+      }
     }
+    syncAuth()
+    window.addEventListener('storage', syncAuth)
+    return () => window.removeEventListener('storage', syncAuth)
   }, [])
 
   async function handleLogout() {

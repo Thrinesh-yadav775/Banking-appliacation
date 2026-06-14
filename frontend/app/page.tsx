@@ -45,7 +45,9 @@ export default function Dashboard() {
       return
     }
     const stored = localStorage.getItem('user')
-    if (stored) setUser(JSON.parse(stored))
+    if (stored) {
+      try { setUser(JSON.parse(stored)) } catch { localStorage.removeItem('user') }
+    }
     loadAccounts()
   }, [])
 
@@ -236,9 +238,9 @@ export default function Dashboard() {
           <p className="text-gray-400 text-sm">No transactions yet.</p>
         ) : (
           <div className="flex flex-col gap-2">
-            {transactions.map((tx, i) => (
+            {transactions.map((tx) => (
               <div
-                key={`${tx._id}-${i}`}
+                key={tx._id}
                 className="flex items-center justify-between rounded-xl px-4 py-3 bg-gray-50 border border-gray-100 hover:bg-gray-100 transition"
               >
                 <div className="flex items-center gap-3 min-w-0 flex-1">

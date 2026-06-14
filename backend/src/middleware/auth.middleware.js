@@ -33,7 +33,7 @@ async function authsystemusermiddelware(req,res,next) {
   try{
     const decoded=jwt.verify(token,process.env.tokenkey)
     const user=await usermodel.findById(decoded.id).select("+systemuser")
-    if(!user.systemuser){
+    if(!user || !user.systemuser){
       return res.status(403).json({
         message:"forbiden access , not a system user"
       })
